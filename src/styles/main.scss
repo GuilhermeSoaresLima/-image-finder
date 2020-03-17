@@ -64,8 +64,9 @@
 
     .list {
       .image-container {
+        display: inline-flex;
         .img-item {
-          padding: 10px;
+          padding: 25px;
         }
       }
     }

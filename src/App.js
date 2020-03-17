@@ -19,10 +19,20 @@ function Header(props) {
           onChange={e => {
             console.log(e.target.value, "valor");
             console.log(props, "props");
+            // console.log(event);
             // props.handleInputChange(e.target.value);
           }}
         />
-        <button className="btnBusca" onClick={props.handleInputChange}>
+        {/* <button className="btnBusca" onClick={props.handleInputChange}> */}
+        <button
+          className="btnBusca"
+          // onClick={e => {
+          //   // console.log(e, "teste");
+          //   const b = props;
+          //   console.log("b", props);
+          // }}
+          onClick={props.onClick}
+        >
           Buscar
         </button>
       </div>
@@ -82,8 +92,14 @@ function ImageContainer(props) {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { key: "15592454-3d4064f5f4cbfd171f337e41e" };
-    const key = "15592454-3d4064f5f4cbfd171f337e41e";
+    this.state = { key: "15592454-3d4064f5f4cbfd171f337e41e", phrase: "" };
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleChange(e) {
+    // this.props.onPhraseChange(e.target.value);
+    this.setState({ phrase: e.target.value });
+    console.log("phrase", this.state.phrase);
   }
 
   componentDidMount() {
@@ -139,21 +155,26 @@ class App extends Component {
 
   handleInputChange(event) {
     const target = event.target;
+    console.log("evento filho", event.target);
     // const value = target.name === "isGoing" ? target.checked : target.value;
     // const name = target.name;
 
     // this.setState({
     //   [name]: value
     // });
-
-    console.log(event);
+    // this.setState({
+    //   phase: event.target
+    // });
+    // console.log(event);
+    // console.log("phrase", this.state.phrase);
   }
 
   render() {
+    const phrase = this.state.phrase;
     return (
       <div className="main-screen">
         <div className="main-header">
-          <Header onChange={this.handleInputChange} />
+          <Header onClick={this.handleChange} />
         </div>
         <div className="main-body">
           <ListImages />
