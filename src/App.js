@@ -16,7 +16,11 @@ function Header(props) {
           type="text"
           className="txtBusca"
           placeholder="Buscar..."
-          onChange={props.handleInputChange}
+          onChange={e => {
+            console.log(e.target.value, "valor");
+            console.log(props, "props");
+            // props.handleInputChange(e.target.value);
+          }}
         />
         <button className="btnBusca" onClick={props.handleInputChange}>
           Buscar
@@ -149,10 +153,10 @@ class App extends Component {
     return (
       <div className="main-screen">
         <div className="main-header">
-          <Header />
+          <Header onChange={this.handleInputChange} />
         </div>
         <div className="main-body">
-          <ListImages onChange={this.handleInputChange} />
+          <ListImages />
         </div>
       </div>
     );
