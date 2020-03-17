@@ -12,8 +12,15 @@ function Header(props) {
     <div className="header">
       <div className="divBusca">
         <img src={logo} alt="Buscar..." />
-        <input type="text" className="txtBusca" placeholder="Buscar..." />
-        <button className="btnBusca">Buscar</button>
+        <input
+          type="text"
+          className="txtBusca"
+          placeholder="Buscar..."
+          onChange={props.handleInputChange}
+        />
+        <button className="btnBusca" onClick={props.handleInputChange}>
+          Buscar
+        </button>
       </div>
       <div className="header-filter">
         <nav>
@@ -48,7 +55,7 @@ function ListImages(props) {
   return (
     <div className="list">
       {listImg.map(value => (
-        <ImageContainer />
+        <ImageContainer key={value.toString()} />
       ))}
     </div>
   );
@@ -59,6 +66,7 @@ function ImageContainer(props) {
     <div className="image-container">
       <div className="img-item">
         <img src="https://cdn.pixabay.com/user/2014/07/12/21-19-34-426_250x250.jpg" />
+        {/* <img src="https://cdn.pixabay.com/user/2019/12/22/16-48-03-254_250x250.jpg" /> */}
       </div>
       <div className="image-detail">
         <div className="user-image"></div>
@@ -97,9 +105,12 @@ class App extends Component {
 
     axios
       .get(
+        // "https://pixabay.com/api/?key=" +
+        //   this.state.key +
+        //   "&q=yellow+flowers&image_type=photo"
         "https://pixabay.com/api/?key=" +
           this.state.key +
-          "=yellow+flowers&image_type=photo"
+          "&q=black+cat&image_type=photo"
       )
       .then(function(response) {
         // handle success
@@ -121,6 +132,19 @@ class App extends Component {
   //     <div className="main-body"></div>
   //   </div>
   // );
+
+  handleInputChange(event) {
+    const target = event.target;
+    // const value = target.name === "isGoing" ? target.checked : target.value;
+    // const name = target.name;
+
+    // this.setState({
+    //   [name]: value
+    // });
+
+    console.log(event);
+  }
+
   render() {
     return (
       <div className="main-screen">
@@ -128,7 +152,7 @@ class App extends Component {
           <Header />
         </div>
         <div className="main-body">
-          <ListImages />
+          <ListImages onChange={this.handleInputChange} />
         </div>
       </div>
     );
