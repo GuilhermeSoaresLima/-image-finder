@@ -1,0 +1,73 @@
+.main-screen {
+  border: 1px solid red;
+  .main-header {
+    border: 1px solid purple;
+    .header {
+      .divBusca {
+        background-color: #e0eeee;
+        // border: solid 2px #5f9ea0;
+        // border-radius: 10px;
+        // width: 300px;
+        height: 32px;
+        padding: 10px;
+      }
+
+      .txtBusca {
+        float: left;
+        background-color: transparent;
+        padding-left: 5px;
+        font-size: 18px;
+        border: none;
+        height: 35px;
+        width: 500px;
+        background-color: #fefefe;
+      }
+
+      .btnBusca {
+        border: none;
+        float: left;
+        height: 39px;
+        border-radius: 0 7px 7px 0;
+        width: 70px;
+        font-weight: bold;
+        background: #5f9ea0;
+      }
+
+      .divBusca img {
+        float: left;
+        height: 60%;
+        margin: 6px 6px;
+      }
+
+      .header-filter {
+        background-color: #e0eeee;
+        .nav-list {
+          display: inline-flex;
+          list-style: none;
+
+          li {
+            margin: 0px 10px 0 10px;
+
+            a {
+              text-decoration: none;
+              color: unset;
+              //   color: #0000;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .main-body {
+    border: 1px solid green;
+
+    .list {
+      .image-container {
+        .img-item {
+          padding: 10px;
+        }
+      }
+    }
+  }
+}

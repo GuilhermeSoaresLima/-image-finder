@@ -1,26 +1,138 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import React from "react";
+import React, { Component } from "react";
+import "./App.css";
+import "./styles/main.scss";
+import logo from "./assets/search2.svg";
+import $ from "jquery";
+import axios from "axios";
+// import "../src/assets/search3.png";
 
-function App() {
+function Header(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="header">
+      <div className="divBusca">
+        <img src={logo} alt="Buscar..." />
+        <input type="text" className="txtBusca" placeholder="Buscar..." />
+        <button className="btnBusca">Buscar</button>
+      </div>
+      <div className="header-filter">
+        <nav>
+          <ul className="nav-list">
+            <li>
+              <a href="#">Popular</a>
+            </li>
+            <li>
+              <a href="#">Images</a>
+            </li>
+            <li>
+              <a href="#">Orientation</a>
+            </li>
+            <li>
+              <a href="#">Category</a>
+            </li>
+            <li>
+              <a href="#">Size</a>
+            </li>
+            <li>
+              <a href="#">Color</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   );
+}
+
+function ListImages(props) {
+  const listImg = [0, 1, 3, 4, 5, 6, 7, 8, 9];
+  return (
+    <div className="list">
+      {listImg.map(value => (
+        <ImageContainer />
+      ))}
+    </div>
+  );
+}
+
+function ImageContainer(props) {
+  return (
+    <div className="image-container">
+      <div className="img-item">
+        <img src="https://cdn.pixabay.com/user/2014/07/12/21-19-34-426_250x250.jpg" />
+      </div>
+      <div className="image-detail">
+        <div className="user-image"></div>
+      </div>
+    </div>
+  );
+}
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { key: "15592454-3d4064f5f4cbfd171f337e41e" };
+    const key = "15592454-3d4064f5f4cbfd171f337e41e";
+  }
+
+  componentDidMount() {
+    // chamado depois da primeira reenderização
+    console.log("DidMount");
+    console.log("chave");
+    console.log(this.state.key);
+
+    // var URL =
+    //   "https://pixabay.com/api/?key=" +
+    //   this.state.key +
+    //   "&q=" +
+    //   // encodeURIComponent("red roses");
+    //   encodeURIComponent("roses");
+    // $.getJSON(URL, function(data) {
+    //   if (parseInt(data.totalHits) > 0)
+    //     $.each(data.hits, function(i, hit) {
+    //       console.log(hit.pageURL);
+    //       console.log(data);
+    //     });
+    //   else console.log("No hits");
+    // });
+
+    axios
+      .get(
+        "https://pixabay.com/api/?key=" +
+          this.state.key +
+          "=yellow+flowers&image_type=photo"
+      )
+      .then(function(response) {
+        // handle success
+        console.log(response);
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      });
+    // .then(function() {
+    //   // always executed
+    // });
+  }
+  // return (
+  //   <div className="main-screen">
+  //     <div className="main-header">
+  //       <Header />
+  //     </div>
+  //     <div className="main-body"></div>
+  //   </div>
+  // );
+  render() {
+    return (
+      <div className="main-screen">
+        <div className="main-header">
+          <Header />
+        </div>
+        <div className="main-body">
+          <ListImages />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
