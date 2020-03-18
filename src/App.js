@@ -193,36 +193,13 @@ class App extends Component {
 
   showMore = () => {
     console.log("teste botao");
-    // if (this.state.itens.length <= 20) {
-    //   console.log(this.state.itens.length);
-    //   this.setState({ itensPage: 40 });
-    //   console.log("itens page", this.state.itensPage);
-    // } else {
-    //   this.setState({ itensPage: this.state.itensPage + 20 });
-    // }
-
-    // axios
-    //   .get(
-    //     "https://pixabay.com/api/?key=" +
-    //       this.state.key +
-    //       "&q=" +
-    //       this.state.phrase +
-    //       `&per_page=${this.state.itensPage}`
-    //   )
-    //   .then(function(response) {
-    //     // handle success
-    //     console.log(response);
-
-    //     return response;
-    //   })
-    //   .catch(function(error) {
-    //     // handle error
-    //     console.log(error);
-
-    //     return error;
-    //   });
-
-    this.setState({ itensPage: this.state.itensPage + 20 });
+    if (this.state.itens.length <= 20) {
+      console.log(this.state.itens.length);
+      this.setState({ itensPage: 40 });
+      console.log("itens page", this.state.itensPage);
+    } else {
+      this.setState({ itensPage: this.state.itensPage + 20 });
+    }
   };
 
   handleInputChange(event) {
