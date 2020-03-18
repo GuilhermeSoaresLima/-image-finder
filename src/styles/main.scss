@@ -70,5 +70,17 @@
         }
       }
     }
+
+    .container-button {
+      border: 1px solid green;
+      text-align: center;
+      .btn-see-more {
+        border: 1px solid aquamarine;
+        border-radius: 7px;
+        width: 145px;
+        font-weight: bold;
+        background: #5f9ea0;
+      }
+    }
   }
 }
