@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import logo from "../../assets/search2.svg";
 
 function exchangeSpacePlus(text) {
@@ -6,6 +7,7 @@ function exchangeSpacePlus(text) {
   const phraseFormated = isPhrase ? text.replace(" ", "+") : text;
   return phraseFormated;
 }
+
 function Header(props) {
   return (
     <div className="header">
@@ -55,5 +57,9 @@ function Header(props) {
     </div>
   );
 }
+
+Header.propTypes = {
+  onSearch: PropTypes.func.isRequired
+};
 
 export default Header;

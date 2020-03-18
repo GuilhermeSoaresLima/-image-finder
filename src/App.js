@@ -6,6 +6,7 @@ import axios from "axios";
 import Header from "./components/Header";
 import ListImages from "./components/ListImages";
 import SeeMore from "./components/SeeMore";
+import { API_URL, API_KEY } from "./constants";
 
 class App extends Component {
   constructor(props) {
@@ -27,21 +28,22 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get(
-        "https://pixabay.com/api/?key=" +
-          this.state.key +
-          "&q=" +
-          this.state.phrase +
-          "&image_type=photo"
-      )
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    this.requestImages();
   }
+
+  requestImages = queryStrings => {
+    const queryStringResult = new URLSearchParams(queryStrings).toString();
+    axios
+      .get(`${API_URL}?key=${API_KEY}&${queryStringResult}`)
+      .then(response => {
+        this.setState({
+          items: response.data.hits
+        });
+      })
+      .catch(error => {
+        alert("Falha ao buscar imagens");
+      });
+  };
 
   showMore = () => {
     console.log("teste botao");
@@ -117,15 +119,14 @@ class App extends Component {
   };
 
   render() {
-    const phrase = this.state.phrase;
+    const { phrase } = this.state.phrase;
     return (
       <div className="main-screen">
         <div className="main-header">
           <Header
-            // valuePhrase={this.handleChange}
             onHandleInputChange={this.handleInputChange}
             onSearch={this.changeState}
-            phrase={this.state.phrase}
+            phrase={phrase}
           />
         </div>
         <div className="main-body">
