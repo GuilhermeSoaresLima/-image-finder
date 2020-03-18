@@ -2,133 +2,10 @@
 import React, { Component } from "react";
 import "./App.css";
 import "./styles/main.scss";
-import logo from "./assets/search2.svg";
-import $ from "jquery";
 import axios from "axios";
-// import "../src/assets/search3.png";
-
-function exchangeSpacePlus(text) {
-  const isPhrase = text.split(" ").length > 0 ? true : false;
-  const phraseFormated = isPhrase ? text.replace(" ", "+") : text;
-  return phraseFormated;
-}
-
-function Header(props) {
-  return (
-    <div className="header">
-      <div className="divBusca">
-        <img src={logo} alt="Buscar..." />
-        <input
-          type="text"
-          className="txtBusca"
-          placeholder="Buscar..."
-          value={props.phrase}
-          onChange={event => props.setStateDoPapaizineo(event.target.value)}
-        />
-        <button
-          className="btnBusca"
-          onClick={event => {
-            console.log(props.phrase);
-            const isPhrase = exchangeSpacePlus(props.phrase);
-            console.log("isPhrase", isPhrase);
-            props.setStateDoPapaizineo(isPhrase);
-          }}
-        >
-          Buscar
-        </button>
-      </div>
-      <div className="header-filter">
-        <nav>
-          <ul className="nav-list">
-            <li>
-              <a href="#">Popular</a>
-            </li>
-            <li>
-              <a href="#">Images</a>
-            </li>
-            <li>
-              <a href="#">Orientation</a>
-            </li>
-            <li>
-              <a href="#">Category</a>
-            </li>
-            <li>
-              <a href="#">Size</a>
-            </li>
-            <li>
-              <a href="#">Color</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  );
-}
-
-// function ListImages(props) {
-//   const listImg = [0, 1, 3, 4, 5, 6, 7, 8, 9];
-//   return (
-//     <div className="list">
-//       {listImg.map(value => (
-//         <ImageContainer key={value.toString()} />
-//       ))}
-//     </div>
-//   );
-// }
-
-// function ImageContainer(props) {
-//   return (
-//     <div className="image-container">
-//       <div className="img-item">
-//         <img src="https://cdn.pixabay.com/user/2014/07/12/21-19-34-426_250x250.jpg" />
-//         {/* <img src="https://cdn.pixabay.com/user/2019/12/22/16-48-03-254_250x250.jpg" /> */}
-//       </div>
-//       <div className="image-detail">
-//         <div className="user-image"></div>
-//       </div>
-//     </div>
-//   );
-// }
-
-function ListImages(props) {
-  return (
-    <div className="list">
-      {props.itens.map(value => (
-        <ImageContainer key={value.id.toString()} url={value.previewURL} />
-      ))}
-    </div>
-  );
-}
-
-function ImageContainer(props) {
-  return (
-    <div className="image-container">
-      <div className="img-item">
-        <img src={props.url} />
-        {/* <img src="https://cdn.pixabay.com/user/2019/12/22/16-48-03-254_250x250.jpg" /> */}
-      </div>
-      <div className="image-detail">
-        <div className="user-image"></div>
-      </div>
-    </div>
-  );
-}
-
-function SeeMore(props) {
-  return (
-    <div className="container-button">
-      <button
-        className="btn-see-more"
-        onClick={event => {
-          props.more();
-          props.update(props.phrase);
-        }}
-      >
-        Ver mais...
-      </button>
-    </div>
-  );
-}
+import Header from "./components/Header";
+import ListImages from "./components/ListImages";
+import SeeMore from "./components/SeeMore";
 
 class App extends Component {
   constructor(props) {
@@ -149,7 +26,7 @@ class App extends Component {
     console.log("phrase", e.target.value);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // chamado depois da primeira reenderização
     console.log("DidMount");
     console.log("chave");
