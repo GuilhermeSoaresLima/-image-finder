@@ -16,15 +16,13 @@ function Header(props) {
           className="txtBusca"
           placeholder="Buscar..."
           value={props.phrase}
-          onChange={event => props.setStateDoPapaizineo(event.target.value)}
+          onChange={event => props.onHandleInputChange(event)}
         />
         <button
           className="btnBusca"
           onClick={event => {
-            console.log(props.phrase);
             const isPhrase = exchangeSpacePlus(props.phrase);
-            console.log("isPhrase", isPhrase);
-            props.setStateDoPapaizineo(isPhrase);
+            props.onSearch(isPhrase);
           }}
         >
           Buscar

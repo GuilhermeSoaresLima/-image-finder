@@ -1,4 +1,4 @@
-export const HEADER_ITEMS = [
+export const HEADER_items = [
   "Popular",
   "Images",
   "Orientation",

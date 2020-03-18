@@ -11,8 +11,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itensPage: 0,
-      itens: [],
+      itemsPage: 0,
+      items: [],
       key: "15592454-3d4064f5f4cbfd171f337e41e",
       phrase: ""
     };
@@ -27,26 +27,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // chamado depois da primeira reenderização
-    console.log("DidMount");
-    console.log("chave");
-    console.log(this.state.key);
-
-    // var URL =
-    //   "https://pixabay.com/api/?key=" +
-    //   this.state.key +
-    //   "&q=" +
-    //   // encodeURIComponent("red roses");
-    //   encodeURIComponent("roses");
-    // $.getJSON(URL, function(data) {
-    //   if (parseInt(data.totalHits) > 0)
-    //     $.each(data.hits, function(i, hit) {
-    //       console.log(hit.pageURL);
-    //       console.log(data);
-    //     });
-    //   else console.log("No hits");
-    // });
-
     axios
       .get(
         "https://pixabay.com/api/?key=" +
@@ -56,45 +36,38 @@ class App extends Component {
           "&image_type=photo"
       )
       .then(function(response) {
-        // handle success
         console.log(response);
       })
       .catch(function(error) {
-        // handle error
         console.log(error);
       });
-    // .then(function() {
-    //   // always executed
-    // });
   }
 
   showMore = () => {
     console.log("teste botao");
-    if (this.state.itens.length <= 20) {
-      console.log(this.state.itens.length);
-      this.setState({ itensPage: 40 });
-      console.log("itens page", this.state.itensPage);
+    if (this.state.items.length <= 20) {
+      console.log(this.state.items.length);
+      this.setState({ itemsPage: 40 });
+      console.log("items page", this.state.itemsPage);
     } else {
-      this.setState({ itensPage: this.state.itensPage + 20 });
+      this.setState({ itemsPage: this.state.itemsPage + 20 });
     }
   };
 
   handleInputChange(event) {
-    const target = event.target;
-    console.log("evento filho", event.target);
+    this.setState({ phrase: event.target.value }); //salvando texto digitado no state
   }
 
   getValue(value) {
-    this.setState({ itens: value });
+    this.setState({ items: value });
   }
 
   changeState = value => {
-    let moreItens = `&per_page=${this.state.itensPage}`;
+    let moreitems = `&per_page=${this.state.itemsPage}`;
     this.setState({ phrase: value }); //atualizo o meu state
-    console.log("estado", this.state.phrase);
-    console.log("itens", moreItens);
-    const x =
-      this.state.itensPage === 0
+
+    const apiResponse =
+      this.state.itemsPage === 0
         ? axios
             .get(
               "https://pixabay.com/api/?key=" +
@@ -121,7 +94,7 @@ class App extends Component {
                 this.state.key +
                 "&q=" +
                 this.state.phrase +
-                moreItens
+                moreitems
             )
             .then(function(response) {
               // handle success
@@ -136,10 +109,10 @@ class App extends Component {
               return error;
             });
 
-    x.then(value => {
+    apiResponse.then(value => {
       console.log("valor", value);
-      this.setState({ itens: value.data.hits });
-      console.log("itens", this.state.itens);
+      this.setState({ items: value.data.hits });
+      console.log("items", this.state.items);
     });
   };
 
@@ -150,13 +123,14 @@ class App extends Component {
         <div className="main-header">
           <Header
             // valuePhrase={this.handleChange}
-            setStateDoPapaizineo={this.changeState}
+            onHandleInputChange={this.handleInputChange}
+            onSearch={this.changeState}
             phrase={this.state.phrase}
           />
         </div>
         <div className="main-body">
-          <ListImages itens={this.state.itens} />
-          {this.state.itens.length >= 20 ? (
+          <ListImages items={this.state.items} />
+          {this.state.items.length >= 20 ? (
             <SeeMore
               more={this.showMore}
               update={this.changeState}
