@@ -55,8 +55,13 @@
 
             .container-options {
               position: absolute;
-              border: 1px solid red;
-              .itens-options {
+
+              .all-options {
+                border: 1px solid black;
+                background-color: white;
+                padding: 5px;
+                .option-item {
+                }
               }
             }
 

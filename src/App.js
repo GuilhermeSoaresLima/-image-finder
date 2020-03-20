@@ -15,8 +15,10 @@ class App extends Component {
       itemsPage: 0,
       items: [],
       key: "15592454-3d4064f5f4cbfd171f337e41e",
-      phrase: ""
+      phrase: "",
+      url: ""
     };
+    this.requestCurrentURL = this.requestCurrentURL.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getValue = this.getValue.bind(this);
     this.showMore = this.showMore.bind(this);
@@ -31,11 +33,18 @@ class App extends Component {
     this.requestImages();
   }
 
+  requestCurrentURL = currentURL => {
+    console.log("chamada", currentURL);
+    this.setState({ url: currentURL });
+  };
   requestImages = queryStrings => {
     const queryStringResult = new URLSearchParams(queryStrings).toString();
     axios
       .get(`${API_URL}?key=${API_KEY}&${queryStringResult}`)
       .then(response => {
+        this.requestCurrentURL(
+          `${API_URL}?key=${API_KEY}&${queryStringResult}`
+        );
         this.setState({
           items: response.data.hits
         });
@@ -59,6 +68,7 @@ class App extends Component {
   handleInputChange(event) {
     this.setState({ phrase: event.target.value }); //salvando texto digitado no state
     console.log("phrase: ", this.state.phrase);
+    console.log("link", this.state.url);
   }
 
   getValue(value) {
@@ -80,6 +90,12 @@ class App extends Component {
               // "&per_page=200"
             )
             .then(function(response) {
+              // this.requestCurrentURL(
+              //   "https://pixabay.com/api/?key=" +
+              //     this.state.key +
+              //     "&q=" +
+              //     this.state.phrase
+              // );
               // handle success
               console.log(response);
 
@@ -116,6 +132,13 @@ class App extends Component {
       console.log("valor", value);
       this.setState({ items: value.data.hits });
       console.log("items", this.state.items);
+
+      this.requestCurrentURL(
+        "https://pixabay.com/api/?key=" +
+          this.state.key +
+          "&q=" +
+          this.state.phrase
+      );
     });
   };
 
@@ -127,15 +150,17 @@ class App extends Component {
             onHandleInputChange={this.handleInputChange}
             onSearch={this.changeState}
             phrase={this.state.phrase}
+            url={this.state.url}
           />
         </div>
         <div className="main-body">
-          <ListImages items={this.state.items} />
+          <ListImages items={this.state.items} url={this.props.url} />
           {this.state.items.length >= 20 ? (
             <SeeMore
               more={this.showMore}
               update={this.changeState}
               phrase={this.state.phrase}
+              url={this.props.url}
             />
           ) : (
             ""
