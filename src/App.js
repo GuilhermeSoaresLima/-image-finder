@@ -58,6 +58,7 @@ class App extends Component {
 
   handleInputChange(event) {
     this.setState({ phrase: event.target.value }); //salvando texto digitado no state
+    console.log("phrase: ", this.state.phrase);
   }
 
   getValue(value) {
@@ -119,14 +120,13 @@ class App extends Component {
   };
 
   render() {
-    const { phrase } = this.state.phrase;
     return (
       <div className="main-screen">
         <div className="main-header">
           <Header
             onHandleInputChange={this.handleInputChange}
             onSearch={this.changeState}
-            phrase={phrase}
+            phrase={this.state.phrase}
           />
         </div>
         <div className="main-body">
