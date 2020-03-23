@@ -1,6 +1,6 @@
 import React from "react";
 import ImageContainer from "../ImageContainer";
-
+import PropTypes from "prop-types";
 function ListImages(props) {
   return (
     <div className="list">
@@ -12,7 +12,7 @@ function ListImages(props) {
 }
 
 ListImages.propTypes = {
-  items: PropTypes.string,
+  items: PropTypes.array,
   url: PropTypes.string
 };
 
