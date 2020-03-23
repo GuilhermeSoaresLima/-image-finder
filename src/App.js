@@ -23,6 +23,13 @@ class App extends Component {
     this.getValue = this.getValue.bind(this);
     this.showMore = this.showMore.bind(this);
     this.changeState = this.changeState.bind(this);
+    this.updateItems = this.updateItems.bind(this);
+  }
+
+  updateItems(updatedItems) {
+    this.setState({
+      items: updatedItems
+    });
   }
 
   handleChange(e) {
@@ -45,9 +52,10 @@ class App extends Component {
         this.requestCurrentURL(
           `${API_URL}?key=${API_KEY}&${queryStringResult}`
         );
-        this.setState({
-          items: response.data.hits
-        });
+        // this.setState({
+        //   items: response.data.hits
+        // });
+        this.updateItems(response.data.hits);
       })
       .catch(error => {
         alert("Falha ao buscar imagens");
@@ -149,6 +157,7 @@ class App extends Component {
           <Header
             onHandleInputChange={this.handleInputChange}
             onSearch={this.changeState}
+            onUpdateItems={this.updateItems}
             phrase={this.state.phrase}
             url={this.state.url}
           />

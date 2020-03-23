@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import logo from "../../assets/search2.svg";
 import { HEADER_items, OPTIONS, OPTION_category } from "./constants";
 import $ from "jquery";
+import axios from "axios";
 
 function exchangeSpacePlus(text) {
   const isPhrase = text.split(" ").length > 0 ? true : false;
@@ -70,10 +71,14 @@ function Options(props) {
               console.log(props.selectedOption);
               console.log(OPTIONS[props.selectedOption]);
               console.log(OPTIONS[props.selectedOption][item.id.toString()]);
-              this.addFilter(
+              props.onAddFilter(
                 props.selectedOption,
                 OPTIONS[props.selectedOption][item.id.toString()]
               );
+              // this.addFilter(
+              //   props.selectedOption,
+              //   OPTIONS[props.selectedOption][item.id.toString()]
+              // );
             }}
           >
             {item.text.pt}
@@ -98,7 +103,39 @@ class Header extends Component {
   // this.handleInputChange = this.handleInputChange.bind(this);
 
   addFilter(option, value) {
-    console.log(option, value);
+    // console.log(option, value);
+    let filterOption = option === 0 ? "category" : "colors";
+    let searchValue = value;
+    console.log("opcao:", option);
+    console.log("valor", value);
+    console.log(`&${filterOption}=${searchValue.en}`);
+    const searchRequest = `&${filterOption}=${searchValue.en}`;
+    const apiResponse = axios
+      .get(`${this.props.url}${searchRequest}`)
+      .then(function(response) {
+        console.log("nova busca: ", response);
+        return response;
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+
+        return error;
+      });
+
+    apiResponse.then(value => {
+      this.props.onUpdateItems(value.data.hits);
+      // console.log("valor", value);
+      // this.setState({ items: value.data.hits });
+      // console.log("items", this.state.items);
+
+      // this.requestCurrentURL(
+      //   "https://pixabay.com/api/?key=" +
+      //     this.state.key +
+      //     "&q=" +
+      //     this.state.phrase
+      // );
+    });
   }
 
   selectedOption(option) {
@@ -170,6 +207,8 @@ class Header extends Component {
                       items={keysChild}
                       url={this.props.url}
                       selectedOption={this.state.keySelected}
+                      onAddFilter={this.addFilter}
+                      onUpdateItems={this.onUpdateItems}
                     />
                   ) : (
                     ""
