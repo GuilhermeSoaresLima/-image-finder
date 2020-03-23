@@ -168,64 +168,13 @@ class Header extends Component {
     );
   }
 }
-// function Header(props) {
-//   let showOptions = false;
-//   return (
-//     <div className="header">
-//       <div className="divBusca">
-//         <img src={logo} alt="Buscar..." />
-//         <input
-//           type="text"
-//           className="txtBusca"
-//           placeholder="Buscar..."
-//           value={props.phrase}
-//           onChange={event => {
-//             console.log("filtro", OPTION_category);
-//             props.onHandleInputChange(event);
-//           }}
-//         />
-//         <button
-//           className="btnBusca"
-//           onClick={event => {
-//             console.log(props.phrase);
 
-//             const isPhrase = exchangeSpacePlus(props.phrase);
-//             props.onSearch(isPhrase);
-//           }}
-//         >
-//           Buscar
-//         </button>
-//       </div>
-//       <div className="header-filter">
-//         <nav>
-//           <ul className="nav-list">
-//             {HEADER_items.map(value => (
-//               <li key={HEADER_items.indexOf(value)} className="nav-list-item">
-//                 <a
-//                   href="#"
-//                   name={value}
-//                   onClick={event => {
-//                     showOptions = !showOptions;
-//                     console.log("options", showOptions);
-//                     console.log("valor da opcao: ", event.target.name);
-
-//                     debugger;
-//                   }}
-//                 >
-//                   {value}
-//                 </a>
-//                 {showOptions ? "erado" : <Options />}
-//               </li>
-//             ))}
-//           </ul>
-//         </nav>
-//       </div>
-//     </div>
-//   );
-// }
-
-// Header.propTypes = {
-//   onSearch: PropTypes.func.isRequired
-// };
+Header.propTypes = {
+  onHandleInputChange: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  onUpdateItems: PropTypes.func.isRequired,
+  phrase: PropTypes.string,
+  url: PropTypes.string
+};
 
 export default Header;

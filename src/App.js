@@ -23,7 +23,22 @@ class App extends Component {
     this.getValue = this.getValue.bind(this);
     this.changeState = this.changeState.bind(this);
     this.updateItems = this.updateItems.bind(this);
+    this.showMore = this.showMore.bind(this);
   }
+
+  showMore = () => {
+    console.log("teste botao");
+    if (this.state.items.length <= 20) {
+      console.log(this.state.items.length);
+      this.setState({ itemsPage: 40 });
+      console.log("items page", this.state.itemsPage);
+      this.changeState();
+    } else {
+      this.setState({ itemsPage: this.state.itemsPage + 20 });
+      console.log("items page", this.state.itemsPage);
+      this.changeState();
+    }
+  };
 
   updateItems(updatedItems) {
     this.setState({
@@ -68,10 +83,12 @@ class App extends Component {
   }
 
   changeState = value => {
-    const update = this.state.itemsPage === 0 ? 40 : this.state.itemsPage + 20;
-    this.setState({ itemsPage: update });
-    this.setState({ phrase: value }); //atualizo o meu state
-    let moreitems = `&per_page=${update}`;
+    // const update = this.state.itemsPage === 0 ? 40 : this.state.itemsPage + 20;
+    // this.setState({ itemsPage: update });
+    // this.setState({ phrase: value }); //atualizo o meu state
+    // let moreitems = `&per_page=${update}`;
+
+    let moreitems = `&per_page=${this.state.itemsPage}`;
 
     const apiResponse =
       this.state.itemsPage === 0
@@ -80,8 +97,7 @@ class App extends Component {
               "https://pixabay.com/api/?key=" +
                 this.state.key +
                 "&q=" +
-                this.state.phrase +
-                moreitems
+                this.state.phrase
             )
             .then(function(response) {
               // handle success
@@ -138,6 +154,7 @@ class App extends Component {
           <ListImages items={this.state.items} url={this.props.url} />
           {this.state.items.length >= 20 ? (
             <SeeMore
+              more={this.showMore}
               update={this.changeState}
               phrase={this.state.phrase}
               url={this.props.url}

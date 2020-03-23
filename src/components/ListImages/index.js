@@ -11,4 +11,9 @@ function ListImages(props) {
   );
 }
 
+ListImages.propTypes = {
+  items: PropTypes.string,
+  url: PropTypes.string
+};
+
 export default ListImages;
