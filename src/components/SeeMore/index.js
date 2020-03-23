@@ -6,7 +6,6 @@ function SeeMore(props) {
       <button
         className="btn-see-more"
         onClick={event => {
-          props.more();
           props.update(props.phrase);
         }}
       >

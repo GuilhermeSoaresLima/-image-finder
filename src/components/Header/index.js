@@ -16,45 +16,6 @@ function Options(props) {
   console.log("propriedades", props);
   return (
     <div className="container-options">
-      {/* <form action="./option-value.js">
-        <label
-          onClick={event => {
-            event.preventDefault();
-            console.log(event.target);
-          }}
-        >
-          Choose a car:
-        </label>
-        <select
-          onClick={event => {
-            // console.log("escolhido", event);
-            // console.log("escolhido", event.value);
-          }}
-        >
-          {props.items.map(item => (
-            <option
-              className="option-item"
-              key={item.id.toString()}
-              value={item.text.en}
-              onClick={event => {
-                event.preventDefault();
-                console.log(event.target);
-              }}
-            >
-              {item.text.pt}
-            </option>
-          ))}
-        </select>
-        <input
-          type="submit"
-          value="Submit"
-          onClick={event => {
-            console.log(event);
-            event.preventDefault();
-          }}
-        ></input>
-      </form> */}
-
       <div className="all-options">
         {props.items.map(item => (
           <div
@@ -63,22 +24,10 @@ function Options(props) {
             value={item.text.en}
             name={item.text.en}
             onClick={event => {
-              event.preventDefault();
-              console.log(event.target);
-              const x = $(event.target);
-              console.log("x", x[0].innerText);
-              const texto = x[0].innerText;
-              console.log(props.selectedOption);
-              console.log(OPTIONS[props.selectedOption]);
-              console.log(OPTIONS[props.selectedOption][item.id.toString()]);
               props.onAddFilter(
                 props.selectedOption,
                 OPTIONS[props.selectedOption][item.id.toString()]
               );
-              // this.addFilter(
-              //   props.selectedOption,
-              //   OPTIONS[props.selectedOption][item.id.toString()]
-              // );
             }}
           >
             {item.text.pt}
@@ -98,6 +47,7 @@ class Header extends Component {
     this.selectedOption = this.selectedOption.bind(this);
     this.displayOptions = this.displayOptions.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.showOptionsItems = this.showOptionsItems.bind(this);
   }
 
   // this.handleInputChange = this.handleInputChange.bind(this);
@@ -125,16 +75,6 @@ class Header extends Component {
 
     apiResponse.then(value => {
       this.props.onUpdateItems(value.data.hits);
-      // console.log("valor", value);
-      // this.setState({ items: value.data.hits });
-      // console.log("items", this.state.items);
-
-      // this.requestCurrentURL(
-      //   "https://pixabay.com/api/?key=" +
-      //     this.state.key +
-      //     "&q=" +
-      //     this.state.phrase
-      // );
     });
   }
 
@@ -153,6 +93,10 @@ class Header extends Component {
 
   handleChange(e) {
     this.setState({ keySelected: e });
+    this.showOptionsItems();
+  }
+
+  showOptionsItems() {
     this.setState({ viewOptions: !this.state.viewOptions });
   }
 
@@ -184,7 +128,10 @@ class Header extends Component {
             Buscar
           </button>
         </div>
-        <div className="header-filter">
+        <div
+          className="header-filter"
+          onClick={event => this.showOptionsItems()}
+        >
           <nav>
             <ul className="nav-list">
               {HEADER_items.map(value => (
@@ -196,7 +143,6 @@ class Header extends Component {
                       this.showOptions = !this.showOptions;
                       this.selectedOption(event.target.name);
                       this.handleChange(HEADER_items.indexOf(value));
-                      // debugger;
                     }}
                   >
                     {value}
@@ -213,12 +159,6 @@ class Header extends Component {
                   ) : (
                     ""
                   )}
-                  {/* {this.showOptions ? "erado" : <Options />} */}
-                  {/* {this.showOptions ? (
-                    <Options option={this.state.isSelected} />
-                  ) : (
-                    "ërrado"
-                  )} */}
                 </li>
               ))}
             </ul>
