@@ -12,7 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemsPage: 0,
+      itemsPage: 1,
       items: [],
       phrase: "",
       url: ""
@@ -31,46 +31,25 @@ class App extends Component {
   }
 
   getItemsFromApi = value => {
-    let moreitems = `&per_page=${this.state.itemsPage}`;
-
-    const apiResponse =
-      this.state.itemsPage === 0
-        ? axios
-            .get(
-              "https://pixabay.com/api/?key=" +
-                API_KEY +
-                "&q=" +
-                this.state.phrase
-            )
-            .then(function(response) {
-              // handle success
-
-              return response;
-            })
-            .catch(function(error) {
-              // handle error
-
-              return error;
-            })
-        : axios
-            .get(
-              "https://pixabay.com/api/?key=" +
-                API_KEY +
-                "&q=" +
-                this.state.phrase +
-                moreitems
-            )
-            .then(function(response) {
-              // handle success
-              return response;
-            })
-            .catch(function(error) {
-              // handle error
-              return error;
-            });
+    const apiResponse = axios
+      .get(
+        "https://pixabay.com/api/?key=" +
+          API_KEY +
+          "&q=" +
+          this.state.phrase +
+          `&page=${this.state.itemsPage}`
+      )
+      .then(function(response) {
+        // handle success
+        return response;
+      })
+      .catch(function(error) {
+        // handle error
+        return error;
+      });
 
     apiResponse.then(value => {
-      this.setState({ items: value.data.hits });
+      this.setState({ items: this.state.items.concat(value.data.hits) });
 
       this.requestCurrentURL(
         "https://pixabay.com/api/?key=" + API_KEY + "&q=" + this.state.phrase
@@ -85,6 +64,7 @@ class App extends Component {
   requestCurrentURL = currentURL => {
     this.setState({ url: currentURL });
   };
+
   requestImages = queryStrings => {
     const queryStringResult = new URLSearchParams(queryStrings).toString();
     axios
@@ -101,20 +81,19 @@ class App extends Component {
   };
 
   resetItems = () => {
-    this.setState({ itemsPage: 0 });
+    this.setState({ items: [] });
   };
 
   showMore = () => {
     if (this.state.items.length <= 20) {
-      this.setState({ itemsPage: 40 }, this.getItemsFromApi);
+      this.setState({ itemsPage: 2 }, this.getItemsFromApi);
     } else {
       this.setState(
-        { itemsPage: this.state.itemsPage + 20 },
+        { itemsPage: this.state.itemsPage + 1 },
         this.getItemsFromApi
       );
     }
   };
-
   updateItems(updatedItems) {
     this.setState({
       items: updatedItems
