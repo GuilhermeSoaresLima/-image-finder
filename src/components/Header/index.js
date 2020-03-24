@@ -91,8 +91,8 @@ class Header extends Component {
   }
 
   render() {
-    let keysChild = [];
-    keysChild = this.displayOptions(
+    let optionFields = [];
+    optionFields = this.displayOptions(
       OPTIONS[this.state.keySelected].map(value => value)
     );
     return (
@@ -141,11 +141,11 @@ class Header extends Component {
                   {this.state.keySelected === HEADER_items.indexOf(value) &&
                   this.state.viewOptions ? (
                     <Options
-                      items={keysChild}
-                      url={this.props.url}
-                      selectedOption={this.state.keySelected}
+                      items={optionFields}
                       onAddFilter={this.addFilter}
                       onUpdateItems={this.onUpdateItems}
+                      selectedOption={this.state.keySelected}
+                      url={this.props.url}
                     />
                   ) : (
                     ""
@@ -161,10 +161,10 @@ class Header extends Component {
 }
 
 Header.propTypes = {
+  phrase: PropTypes.string,
   onHandleInputChange: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
   onUpdateItems: PropTypes.func.isRequired,
-  phrase: PropTypes.string,
   url: PropTypes.string
 };
 

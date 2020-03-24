@@ -18,7 +18,7 @@ class App extends Component {
       url: ""
     };
 
-    this.changeState = this.changeState.bind(this);
+    this.getItemsFromApi = this.getItemsFromApi.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.requestCurrentURL = this.requestCurrentURL.bind(this);
     this.resetItems = this.resetItems.bind();
@@ -30,7 +30,7 @@ class App extends Component {
     this.requestImages();
   }
 
-  changeState = value => {
+  getItemsFromApi = value => {
     let moreitems = `&per_page=${this.state.itemsPage}`;
 
     const apiResponse =
@@ -106,9 +106,12 @@ class App extends Component {
 
   showMore = () => {
     if (this.state.items.length <= 20) {
-      this.setState({ itemsPage: 40 }, this.changeState);
+      this.setState({ itemsPage: 40 }, this.getItemsFromApi);
     } else {
-      this.setState({ itemsPage: this.state.itemsPage + 20 }, this.changeState);
+      this.setState(
+        { itemsPage: this.state.itemsPage + 20 },
+        this.getItemsFromApi
+      );
     }
   };
 
@@ -123,11 +126,11 @@ class App extends Component {
       <div className="main-screen">
         <div className="main-header">
           <Header
-            reset={this.resetItems}
             onHandleInputChange={this.handleInputChange}
-            onSearch={this.changeState}
+            onSearch={this.getItemsFromApi}
             onUpdateItems={this.updateItems}
             phrase={this.state.phrase}
+            reset={this.resetItems}
             url={this.state.url}
           />
         </div>
