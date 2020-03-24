@@ -7,7 +7,6 @@ function SeeMore(props) {
         className="btn-see-more"
         onClick={event => {
           props.more();
-          // props.update(props.phrase);
         }}
       >
         Ver mais...
@@ -17,10 +16,7 @@ function SeeMore(props) {
 }
 
 SeeMore.propTypes = {
-  more: PropTypes.func.isRequired,
-  phrase: PropTypes.string,
-  update: PropTypes.func.isRequired,
-  url: PropTypes.string
+  more: PropTypes.func.isRequired
 };
 
 export default SeeMore;

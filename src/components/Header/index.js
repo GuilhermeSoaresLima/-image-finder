@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import logo from "../../assets/search2.svg";
 import { HEADER_items, OPTIONS, OPTION_category } from "./constants";
-import $ from "jquery";
 import axios from "axios";
 
 function exchangeSpacePlus(text) {
@@ -13,7 +12,6 @@ function exchangeSpacePlus(text) {
 }
 
 function Options(props) {
-  console.log("propriedades", props);
   return (
     <div className="container-options">
       <div className="all-options">
@@ -50,25 +48,18 @@ class Header extends Component {
     this.showOptionsItems = this.showOptionsItems.bind(this);
   }
 
-  // this.handleInputChange = this.handleInputChange.bind(this);
-
   addFilter(option, value) {
-    // console.log(option, value);
     let filterOption = option === 0 ? "category" : "colors";
     let searchValue = value;
-    console.log("opcao:", option);
-    console.log("valor", value);
-    console.log(`&${filterOption}=${searchValue.en}`);
+
     const searchRequest = `&${filterOption}=${searchValue.en}`;
     const apiResponse = axios
       .get(`${this.props.url}${searchRequest}`)
       .then(function(response) {
-        console.log("nova busca: ", response);
         return response;
       })
       .catch(function(error) {
         // handle error
-        console.log(error);
 
         return error;
       });
@@ -80,7 +71,6 @@ class Header extends Component {
 
   selectedOption(option) {
     this.setState({ isSelected: option });
-    console.log("selecionado", this.state.isSelected);
   }
 
   displayOptions(options) {
@@ -115,6 +105,7 @@ class Header extends Component {
             placeholder="Buscar..."
             value={this.props.phrase}
             onChange={event => {
+              this.props.reset();
               this.props.onHandleInputChange(event);
             }}
           />
