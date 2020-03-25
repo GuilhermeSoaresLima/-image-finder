@@ -1,0 +1,67 @@
+.header {
+  .divBusca {
+    background-color: #e0eeee;
+    height: 32px;
+    padding: 10px;
+  }
+
+  .txtBusca {
+    float: left;
+    background-color: transparent;
+    padding-left: 5px;
+    font-size: 18px;
+    border: none;
+    height: 35px;
+    width: 500px;
+    background-color: #fefefe;
+  }
+
+  .btnBusca {
+    border: none;
+    float: left;
+    height: 39px;
+    border-radius: 0 7px 7px 0;
+    width: 70px;
+    font-weight: bold;
+    background: #5f9ea0;
+  }
+
+  .divBusca img {
+    float: left;
+    height: 60%;
+    margin: 6px 6px;
+  }
+
+  .header-filter {
+    background-color: #e0eeee;
+    .nav-list {
+      display: inline-flex;
+      list-style: none;
+
+      .nav-list-item {
+        margin: 0px 10px 0 10px;
+
+        .container-options {
+          position: absolute;
+
+          .all-options {
+            border: 1px solid black;
+            background-color: white;
+            padding: 5px;
+            .option-item {
+            }
+          }
+        }
+
+        a {
+          text-decoration: none;
+          color: black;
+          :hover {
+            text-decoration: 1px solid white;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}

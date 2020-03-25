@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "./see-more.scss";
 function SeeMore(props) {
   return (
     <div className="container-button">

@@ -1,6 +1,7 @@
 import React from "react";
 import ImageContainer from "../ImageContainer";
 import PropTypes from "prop-types";
+import "./list-images.scss";
 function ListImages(props) {
   return (
     <div className="list">

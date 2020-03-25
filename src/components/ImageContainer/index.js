@@ -1,4 +1,5 @@
 import React from "react";
+import "./image-container.scss";
 
 function ImageContainer(props) {
   return (
