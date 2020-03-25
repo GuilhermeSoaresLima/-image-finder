@@ -6,6 +6,7 @@ import axios from "axios";
 import Header from "./components/Header";
 import ListImages from "./components/ListImages";
 import SeeMore from "./components/SeeMore";
+import Loader from "./components/Loader";
 import { API_URL, API_KEY } from "./constants";
 
 class App extends Component {
@@ -14,10 +15,12 @@ class App extends Component {
     this.state = {
       itemsPage: 1,
       items: [],
+      loader: false,
       phrase: "",
       url: ""
     };
 
+    this.displayLoader = this.displayLoader.bind(this);
     this.getItemsFromApi = this.getItemsFromApi.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.requestCurrentURL = this.requestCurrentURL.bind(this);
@@ -29,6 +32,10 @@ class App extends Component {
   componentDidMount() {
     this.requestImages();
   }
+
+  displayLoader = () => {
+    this.setState({ loader: !this.state.loader });
+  };
 
   getItemsFromApi = value => {
     const apiResponse = axios
@@ -50,7 +57,7 @@ class App extends Component {
 
     apiResponse.then(value => {
       this.setState({ items: this.state.items.concat(value.data.hits) });
-
+      this.displayLoader();
       this.requestCurrentURL(
         "https://pixabay.com/api/?key=" + API_KEY + "&q=" + this.state.phrase
       );
@@ -115,8 +122,9 @@ class App extends Component {
         </div>
         <div className="main-body">
           <ListImages items={this.state.items} url={this.props.url} />
+          {this.state.loader ? <Loader /> : ""}
           {this.state.items.length >= 20 ? (
-            <SeeMore more={this.showMore} />
+            <SeeMore more={this.showMore} showLoader={this.displayLoader} />
           ) : (
             ""
           )}

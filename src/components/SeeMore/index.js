@@ -7,6 +7,7 @@ function SeeMore(props) {
       <button
         className="btn-see-more"
         onClick={event => {
+          props.showLoader();
           props.more();
         }}
       >
