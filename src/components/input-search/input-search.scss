@@ -1,0 +1,32 @@
+.divBusca {
+  background-color: #e0eeee;
+  height: 32px;
+  padding: 10px;
+}
+
+.txtBusca {
+  float: left;
+  background-color: transparent;
+  padding-left: 5px;
+  font-size: 18px;
+  border: none;
+  height: 35px;
+  width: 500px;
+  background-color: #fefefe;
+}
+
+.btnBusca {
+  border: none;
+  float: left;
+  height: 39px;
+  border-radius: 0 7px 7px 0;
+  width: 70px;
+  font-weight: bold;
+  background: #5f9ea0;
+}
+
+.divBusca img {
+  float: left;
+  height: 60%;
+  margin: 6px 6px;
+}
