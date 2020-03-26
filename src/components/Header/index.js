@@ -5,6 +5,13 @@ import logo from "../../assets/search2.svg";
 import "./header.scss";
 import { HEADER_items, OPTIONS, OPTION_category } from "./constants";
 import axios from "axios";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams
+} from "react-router-dom";
 
 function exchangeSpacePlus(text) {
   const isPhrase = text.split(" ").length > 0 ? true : false;
@@ -13,6 +20,7 @@ function exchangeSpacePlus(text) {
 }
 
 function Options(props) {
+  let { id } = useParams();
   return (
     <div className="container-options">
       <div className="all-options">
@@ -29,7 +37,8 @@ function Options(props) {
               );
             }}
           >
-            {item.text.pt}
+            {/* {item.text.pt} */}
+            <Link to={`${id}/${item.text.pt}`}>{item.text.pt}</Link>
           </div>
         ))}
       </div>
@@ -97,66 +106,87 @@ class Header extends Component {
       OPTIONS[this.state.keySelected].map(value => value)
     );
     return (
-      <div className="header">
-        <div className="divBusca">
-          <img src={logo} alt="Buscar..." />
-          <input
-            type="text"
-            className="txtBusca"
-            placeholder="Buscar..."
-            value={this.props.phrase}
-            onChange={event => {
-              this.props.reset();
-              this.props.onHandleInputChange(event);
-            }}
-          />
-          <button
-            className="btnBusca"
-            onClick={event => {
-              const isPhrase = exchangeSpacePlus(this.props.phrase);
-              this.props.onSearch(isPhrase);
-            }}
+      <Router>
+        <div className="header">
+          <div className="divBusca">
+            <img src={logo} alt="Buscar..." />
+            <input
+              type="text"
+              className="txtBusca"
+              placeholder="Buscar..."
+              value={this.props.phrase}
+              onChange={event => {
+                this.props.reset();
+                this.props.onHandleInputChange(event);
+              }}
+            />
+            <button
+              className="btnBusca"
+              onClick={event => {
+                const isPhrase = exchangeSpacePlus(this.props.phrase);
+                this.props.onSearch(isPhrase);
+              }}
+            >
+              Buscar
+            </button>
+          </div>
+          <div
+            className="header-filter"
+            onClick={event => this.showOptionsItems()}
           >
-            Buscar
-          </button>
-        </div>
-        <div
-          className="header-filter"
-          onClick={event => this.showOptionsItems()}
-        >
-          <nav>
-            <ul className="nav-list">
-              {HEADER_items.map(value => (
-                <li key={HEADER_items.indexOf(value)} className="nav-list-item">
-                  <a
-                    href="#"
-                    name={value}
-                    onClick={event => {
-                      this.showOptions = !this.showOptions;
-                      this.selectedOption(event.target.name);
-                      this.handleChange(HEADER_items.indexOf(value));
-                    }}
+            <nav>
+              <ul className="nav-list">
+                {HEADER_items.map(value => (
+                  <li
+                    key={HEADER_items.indexOf(value)}
+                    className="nav-list-item"
                   >
-                    {value}
-                  </a>
-                  {this.state.keySelected === HEADER_items.indexOf(value) &&
-                  this.state.viewOptions ? (
-                    <Options
-                      items={optionFields}
-                      onAddFilter={this.addFilter}
-                      onUpdateItems={this.onUpdateItems}
-                      selectedOption={this.state.keySelected}
-                      url={this.props.url}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
+                    <a
+                      href="#"
+                      name={value}
+                      onClick={event => {
+                        this.showOptions = !this.showOptions;
+                        this.selectedOption(event.target.name);
+                        this.handleChange(HEADER_items.indexOf(value));
+                      }}
+                    >
+                      {/* {value} */}
+                      <Link to={`${value}`}>{value}</Link>
+                    </a>
+                    {this.state.keySelected === HEADER_items.indexOf(value) &&
+                    this.state.viewOptions ? (
+                      // <Options
+                      //   items={optionFields}
+                      //   onAddFilter={this.addFilter}
+                      //   onUpdateItems={this.onUpdateItems}
+                      //   selectedOption={this.state.keySelected}
+                      //   url={this.props.url}
+                      // />
+
+                      <Switch>
+                        <Route
+                          path="/:id"
+                          children={
+                            <Options
+                              items={optionFields}
+                              onAddFilter={this.addFilter}
+                              onUpdateItems={this.onUpdateItems}
+                              selectedOption={this.state.keySelected}
+                              url={this.props.url}
+                            />
+                          }
+                        />
+                      </Switch>
+                    ) : (
+                      ""
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
