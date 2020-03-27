@@ -38,6 +38,7 @@ class App extends Component {
   };
 
   getItemsFromApi = value => {
+    this.setState({ loader: true });
     const apiResponse = axios
       .get(
         "https://pixabay.com/api/?key=" +
@@ -48,6 +49,7 @@ class App extends Component {
       )
       .then(function(response) {
         // handle success
+
         return response;
       })
       .catch(function(error) {
@@ -56,11 +58,13 @@ class App extends Component {
       });
 
     apiResponse.then(value => {
+      console.log("valor", value);
       this.setState({ items: this.state.items.concat(value.data.hits) });
-      this.displayLoader();
+      // this.displayLoader();
       this.requestCurrentURL(
         "https://pixabay.com/api/?key=" + API_KEY + "&q=" + this.state.text
       );
+      this.setState({ loader: false });
     });
   };
 
