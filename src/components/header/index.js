@@ -24,6 +24,10 @@ class Header extends Component {
     this.selectBoxOptions = this.selectBoxOptions.bind(this);
   }
 
+  componentDidMount() {
+    console.log("component filho: ", this.props.filho);
+  }
+
   addFilter(filterOption, searchValue) {
     const searchRequest = `&${filterOption}=${searchValue}`;
     const searchUrl = `${this.props.url}${searchRequest}`.replace("&/", "&");
