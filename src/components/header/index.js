@@ -26,6 +26,7 @@ class Header extends Component {
 
   componentDidMount() {
     console.log("component filho: ", this.props.filho);
+    console.log("url filho: ", this.props.url);
   }
 
   addFilter(filterOption, searchValue) {
@@ -44,7 +45,9 @@ class Header extends Component {
 
     apiResponse.then(value => {
       this.props.onUpdateItems(value.data.hits);
-      this.props.onUpdateCurrentURL(searchUrl);
+
+      this.props.requestCurrentURL(searchUrl);
+      console.log("url header", this.props.url);
     });
   }
 
@@ -92,6 +95,7 @@ class Header extends Component {
                           children={
                             <Options
                               onAddFilter={this.addFilter}
+                              // requestCurrentURL={this.props.requestCurrentURL}
                               reset={this.props.reset}
                               url={this.props.url}
                             />

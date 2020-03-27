@@ -25,6 +25,7 @@ class Colors extends Component {
     this.requestCurrentURL = this.requestCurrentURL.bind(this);
     this.resetItems = this.resetItems.bind();
     this.showMore = this.showMore.bind(this);
+    this.showMoreItemsFromApi = this.showMoreItemsFromApi.bind(this);
     this.updateItems = this.updateItems.bind(this);
   }
 
@@ -49,6 +50,7 @@ class Colors extends Component {
 
     apiResponse.then(value => {
       this.updateItems(value.data.hits);
+      this.requestCurrentURL(searchUrl);
     });
   }
 
@@ -99,16 +101,37 @@ class Colors extends Component {
     this.setState({ url: currentURL });
   };
 
+  showMoreItemsFromApi() {
+    this.setState({ loader: true });
+    const apiResponse = axios
+      .get(this.state.url + `&page=${this.state.itemsPage}`)
+      .then(function(response) {
+        // handle success
+
+        return response;
+      })
+      .catch(function(error) {
+        // handle error
+        return error;
+      });
+
+    apiResponse.then(value => {
+      this.setState({ items: this.state.items.concat(value.data.hits) });
+      this.requestCurrentURL(this.state.url + `&page=${this.state.itemsPage}`);
+      this.setState({ loader: false });
+    });
+  }
+
   resetItems = () => {
     this.setState({ items: [] });
   };
   showMore = () => {
     if (this.state.items.length <= 20) {
-      this.setState({ itemsPage: 2 }, this.getItemsFromApi);
+      this.setState({ itemsPage: 2 }, this.showMoreItemsFromApi);
     } else {
       this.setState(
         { itemsPage: this.state.itemsPage + 1 },
-        this.getItemsFromApi
+        this.showMoreItemsFromApi
       );
     }
   };
@@ -127,6 +150,7 @@ class Colors extends Component {
             onHandleInputChange={this.handleInputChange}
             onSearch={this.getItemsFromApi}
             onUpdateItems={this.updateItems}
+            requestCurrentURL={this.requestCurrentURL}
             reset={this.resetItems}
             text={this.state.text}
             url={this.state.url}

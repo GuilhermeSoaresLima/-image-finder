@@ -15,7 +15,6 @@ import { HEADER_items, OPTIONS, OPTION_category } from "./constants";
 function Options(props) {
   let { url } = useRouteMatch();
   let filteredOption = url.replace("/", "");
-  console.log("filtro", filteredOption);
 
   return (
     <div className="container-options">
@@ -29,6 +28,10 @@ function Options(props) {
                   onClick={event => {
                     props.reset();
                     props.onAddFilter(`${url}`, `${item.en}`);
+
+                    // props.requestCurrentURL(props.url);
+                    const u = { url: props.url };
+                    console.log("url options: ", u);
                   }}
                 >
                   {item.pt}

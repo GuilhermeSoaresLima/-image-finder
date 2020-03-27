@@ -16,7 +16,7 @@ class Category extends Component {
       text: "",
       url: `https://pixabay.com/api/?key=${API_KEY}`
     };
-    this.textToFind = "";
+
     this.findCategory = this.findCategory.bind(this);
     this.findEnglishWord = this.findEnglishWord.bind(this);
     this.displayLoader = this.displayLoader.bind(this);
@@ -49,9 +49,9 @@ class Category extends Component {
 
     apiResponse.then(value => {
       this.updateItems(value.data.hits);
+      this.requestCurrentURL(searchUrl);
     });
   }
-
   displayLoader = () => {
     this.setState({ loader: !this.state.loader });
   };
@@ -83,14 +83,11 @@ class Category extends Component {
       });
 
     apiResponse.then(value => {
-      console.log("valor", value);
       this.setState({ items: this.state.items.concat(value.data.hits) });
-      // this.displayLoader();
       this.requestCurrentURL(
         "https://pixabay.com/api/?key=" + API_KEY + "&q=" + this.state.text
       );
       this.setState({ loader: false });
-      console.log("url atual", this.state.url);
     });
   };
 
@@ -102,16 +99,37 @@ class Category extends Component {
     this.setState({ url: currentURL });
   };
 
+  showMoreItemsFromApi() {
+    this.setState({ loader: true });
+    const apiResponse = axios
+      .get(this.state.url + `&page=${this.state.itemsPage}`)
+      .then(function(response) {
+        // handle success
+
+        return response;
+      })
+      .catch(function(error) {
+        // handle error
+        return error;
+      });
+
+    apiResponse.then(value => {
+      this.setState({ items: this.state.items.concat(value.data.hits) });
+      this.requestCurrentURL(this.state.url + `&page=${this.state.itemsPage}`);
+      this.setState({ loader: false });
+    });
+  }
+
   resetItems = () => {
     this.setState({ items: [] });
   };
   showMore = () => {
     if (this.state.items.length <= 20) {
-      this.setState({ itemsPage: 2 }, this.getItemsFromApi);
+      this.setState({ itemsPage: 2 }, this.showMoreItemsFromApi);
     } else {
       this.setState(
         { itemsPage: this.state.itemsPage + 1 },
-        this.getItemsFromApi
+        this.showMoreItemsFromApi
       );
     }
   };
@@ -129,6 +147,7 @@ class Category extends Component {
       <div>
         <div className="main-header">
           <Header
+            requestCurrentURL={this.requestCurrentURL}
             onHandleInputChange={this.handleInputChange}
             onSearch={this.getItemsFromApi}
             onUpdateItems={this.updateItems}

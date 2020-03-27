@@ -207,7 +207,7 @@ class Main extends Component {
       <div>
         <div className="main-header">
           <Header
-            onUpdateCurrentURL={this.requestCurrentURL}
+            requestCurrentURL={this.requestCurrentURL}
             onHandleInputChange={this.handleInputChange}
             onSearch={this.getItemsFromApi}
             onUpdateItems={this.updateItems}
