@@ -26,7 +26,10 @@ function Options(props) {
               <li key={item.id}>
                 <Link
                   to={`${url}/${item.pt}`}
-                  onClick={event => props.onAddFilter(`${url}`, `${item.en}`)}
+                  onClick={event => {
+                    props.reset();
+                    props.onAddFilter(`${url}`, `${item.en}`);
+                  }}
                 >
                   {item.pt}
                 </Link>

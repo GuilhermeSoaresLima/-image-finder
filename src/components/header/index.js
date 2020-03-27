@@ -26,8 +26,9 @@ class Header extends Component {
 
   addFilter(filterOption, searchValue) {
     const searchRequest = `&${filterOption}=${searchValue}`;
+    const searchUrl = `${this.props.url}${searchRequest}`.replace("&/", "&");
     const apiResponse = axios
-      .get(`${this.props.url}${searchRequest}`)
+      .get(searchUrl)
       .then(function(response) {
         return response;
       })
@@ -80,12 +81,13 @@ class Header extends Component {
                     {this.state.selectedBoxOptions === `${option}` &&
                     this.state.viewBoxOptions ? (
                       <Switch>
-                        <Route exact path="/"></Route>
+                        {/* <Route exact path="/"></Route> */}
                         <Route
                           path="/:id"
                           children={
                             <Options
                               onAddFilter={this.addFilter}
+                              reset={this.props.reset}
                               url={this.props.url}
                             />
                           }
