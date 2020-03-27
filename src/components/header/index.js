@@ -44,6 +44,7 @@ class Header extends Component {
 
     apiResponse.then(value => {
       this.props.onUpdateItems(value.data.hits);
+      this.props.onUpdateCurrentURL(searchUrl);
     });
   }
 
