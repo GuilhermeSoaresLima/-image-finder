@@ -10,6 +10,7 @@ import {
 import "./App.css";
 import Main from "./pages/main";
 import Category from "./pages/category";
+import Colors from "./pages/colors";
 
 class App extends Component {
   constructor(props) {
@@ -17,28 +18,25 @@ class App extends Component {
     this.state = {};
   }
   render() {
-    const Componente = props => {
-      const { id } = useParams();
-      return <div> guilherme + {id}</div>;
-    };
-
-    // const categoryChildren = props => {
-    //   const { id } = useParams();
-    //   return (
-    //     <div>
-    //       <Category id={id} />
-    //     </div>
-    //   );
-    // };
-
     const ComponentCategory = props => {
       let { id } = useParams();
-      console.log("id", `${id}`);
-      // return <div>Guilherme + {id}</div>;
+
       return (
         <div>
           <div className="main-screen">
             <Category id={id} />
+          </div>
+        </div>
+      );
+    };
+
+    const ComponentColors = props => {
+      let { id } = useParams();
+
+      return (
+        <div>
+          <div className="main-screen">
+            <Colors id={id} />
           </div>
         </div>
       );
@@ -49,9 +47,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Main}></Route>
           <Route exact path="/home" component={Main}></Route>
-          <Route exact path="/guilherme/:id" component={Componente} />
-          {/* <Route exact path="/category/:id" children={<Category />} /> */}
-          <Route exact path="/category/:id" component={ComponentCategory} />
+          <Route exact path="/categoria/:id" component={ComponentCategory} />
+          <Route exact path="/cor/:id" component={ComponentColors} />
         </Switch>
       </Router>
     );

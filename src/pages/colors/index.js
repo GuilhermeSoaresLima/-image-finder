@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import Header from "./../../components/header";
-import ListImages from "./../../components/ListImages";
-import SeeMore from "./../../components/SeeMore";
-import Loader from "./../../components/Loader";
+import Header from "../../components/header";
+import ListImages from "../../components/ListImages";
+import SeeMore from "../../components/SeeMore";
+import Loader from "../../components/Loader";
 import axios from "axios";
-import { API_KEY, OPTIONS } from "./../../constants";
+import { API_KEY, OPTIONS } from "../../constants";
 
-class Category extends Component {
+class Colors extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +17,7 @@ class Category extends Component {
       url: `https://pixabay.com/api/?key=${API_KEY}`
     };
     this.textToFind = "";
-    this.findCategory = this.findCategory.bind(this);
+    this.findColor = this.findColor.bind(this);
     this.findEnglishWord = this.findEnglishWord.bind(this);
     this.displayLoader = this.displayLoader.bind(this);
     this.getItemsFromApi = this.getItemsFromApi.bind(this);
@@ -30,11 +30,11 @@ class Category extends Component {
 
   componentDidMount() {
     const englishWord = this.findEnglishWord(this.props.id);
-    this.findCategory(englishWord);
+    this.findColor(englishWord);
   }
 
-  findCategory(searchValue) {
-    const searchRequest = `&&category=${searchValue}`;
+  findColor(searchValue) {
+    const searchRequest = `&&colors=${searchValue}`;
     const searchUrl = `${this.state.url}${searchRequest}`;
     const apiResponse = axios
       .get(searchUrl)
@@ -57,7 +57,7 @@ class Category extends Component {
   };
 
   findEnglishWord(wordToFind) {
-    const englishWord = OPTIONS.category.find(word => word.pt === wordToFind);
+    const englishWord = OPTIONS.colors.find(word => word.pt === wordToFind);
 
     return englishWord.en;
   }
@@ -83,14 +83,11 @@ class Category extends Component {
       });
 
     apiResponse.then(value => {
-      console.log("valor", value);
       this.setState({ items: this.state.items.concat(value.data.hits) });
-      // this.displayLoader();
       this.requestCurrentURL(
         "https://pixabay.com/api/?key=" + API_KEY + "&q=" + this.state.text
       );
       this.setState({ loader: false });
-      console.log("url atual", this.state.url);
     });
   };
 
@@ -123,8 +120,6 @@ class Category extends Component {
   }
 
   render() {
-    // let { id } = useParams();
-
     return (
       <div>
         <div className="main-header">
@@ -151,4 +146,4 @@ class Category extends Component {
   }
 }
 
-export default Category;
+export default Colors;
