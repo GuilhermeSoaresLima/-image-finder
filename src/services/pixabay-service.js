@@ -27,10 +27,7 @@ class PixabayService extends Component {
 
   getFilteredImages(api_url, api_key, filterOption, searchValue) {
     const searchRequest = `&${filterOption}=${searchValue}`;
-    const searchUrl = `${api_url}?key=${api_key}${searchRequest}`.replace(
-      "&/",
-      "&"
-    );
+    const searchUrl = `${api_url}?key=${api_key}${searchRequest}`;
     const apiResponse = axios
       .get(searchUrl)
       .then(function(response) {
