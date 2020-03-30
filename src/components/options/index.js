@@ -9,6 +9,7 @@ function Options(props) {
   const service = new PixabayService();
   //   let filteredOption =
   //     url.replace("/", "") === "categoria" ? "category" : "colors";
+  const filteredOption = "category";
 
   return (
     <div className="container-options">
