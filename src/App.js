@@ -1,26 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams
+} from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.css";
+import Main from "./pages/main";
+import Category from "./pages/category";
+import Colors from "./pages/colors";
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render() {
+    const ComponentCategory = props => {
+      let { id } = useParams();
+
+      return (
+        <div>
+          <div className="main-screen">
+            <Category id={id} />
+          </div>
+        </div>
+      );
+    };
+
+    const ComponentColors = props => {
+      let { id } = useParams();
+
+      return (
+        <div>
+          <div className="main-screen">
+            <Colors id={id} />
+          </div>
+        </div>
+      );
+    };
+
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Main}></Route>
+          <Route exact path="/home" component={Main}></Route>
+          {/* <Route exact path="/categoria/:id" component={ComponentCategory} />
+          <Route exact path="/cor/:id" component={ComponentColors} /> */}
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 export default App;
