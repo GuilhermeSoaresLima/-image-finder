@@ -62,15 +62,9 @@ class Main extends Component {
 
   showMore = () => {
     if (this.state.items.length <= 20) {
-      this.setState(
-        { itemsPage: 2 },
-        this.service.getNextPage(this.state.url, this.state.itemsPage)
-      );
+      this.setState({ itemsPage: 2 });
     } else {
-      this.setState(
-        { itemsPage: this.state.itemsPage + 1 },
-        this.service.getNextPage(this.state.url, this.state.itemsPage)
-      );
+      this.setState({ itemsPage: this.state.itemsPage + 1 });
     }
   };
 
@@ -94,7 +88,12 @@ class Main extends Component {
           <ListImages items={this.state.items} url={this.state.url} />
           {this.state.loader ? <Loader /> : ""}
           {this.state.items.length >= 20 ? (
-            <SeeMore more={this.showMore} showLoader={this.displayLoader} />
+            <SeeMore
+              itemPage={this.state.itemsPage}
+              OnUpdateItems={this.updateItems}
+              showLoader={this.displayLoader}
+              url={this.state.url}
+            />
           ) : (
             ""
           )}

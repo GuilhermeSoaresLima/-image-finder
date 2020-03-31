@@ -63,15 +63,15 @@ class PixabayService extends Component {
     const apiResponse = axios
       .get(`${currentUrl}&page=${numberPage}`)
       .then(response => {
-        console.log("response", response);
+        // console.log("response", response);
+        return response;
       })
       .catch(error => {
         alert("Falha ao buscar imagens");
+        return error;
       });
 
-    apiResponse.then(value => {
-      console.log("value", value);
-    });
+    return apiResponse.then(value => value);
   }
 }
 
