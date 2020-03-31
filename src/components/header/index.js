@@ -48,8 +48,11 @@ class Header extends Component {
                   this.state.viewBoxOptions ? (
                     <Options
                       // onAddFilter={this.addFilter}
-                      reset={this.this.props.reset}
-                      url={this.this.props.url}
+                      // reset={this.this.props.reset}
+                      // url={this.this.props.url}
+                      OnUpdateItems={this.props.OnUpdateItems}
+                      optionBox={option.name}
+                      text={this.props.text}
                     />
                   ) : (
                     ""

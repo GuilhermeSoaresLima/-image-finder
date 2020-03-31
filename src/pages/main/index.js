@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Header from "./../../components/header";
-// import ListImages from "./../../components/ListImages";
-// import SeeMore from "./../../components/SeeMore";
-// import Loader from "./../../components/Loader";
+import ListImages from "./../../components/ListImages";
+import SeeMore from "./../../components/see-more";
+import Loader from "./../../components/loader";
 import axios from "axios";
 import { API_URL, API_KEY } from "./../../constants";
 import PixabayService from "./../../services/pixabay-service";
@@ -15,7 +15,7 @@ class Main extends Component {
       items: [],
       loader: false,
       text: "",
-      url: ""
+      url: `${API_URL}?key=${API_KEY}`
     };
 
     this.service = new PixabayService();
@@ -27,7 +27,24 @@ class Main extends Component {
   componentDidMount() {
     // console.log(this.service.nextPage(API_URL, API_KEY, 2));
     console.log(this.service.getDefaultImages(API_URL, API_KEY));
+
+    const initialImages = this.service.getDefaultImages(API_URL, API_KEY);
+
+    const promiseResolved = Promise.resolve(initialImages);
+
+    promiseResolved.then(
+      function(updatedItems) {
+        // this.updateItems(updatedItems.data.hits);
+      },
+      function(e) {
+        // not called
+      }
+    );
   }
+
+  displayLoader = () => {
+    this.setState({ loader: !this.state.loader });
+  };
 
   handleInputChange(event) {
     this.setState({ text: event.target.value }); //salvando texto digitado no state
@@ -41,6 +58,20 @@ class Main extends Component {
     };
 
     console.log("atual url: ", u);
+  };
+
+  showMore = () => {
+    if (this.state.items.length <= 20) {
+      this.setState(
+        { itemsPage: 2 },
+        this.service.getNextPage(this.state.url, this.state.itemsPage)
+      );
+    } else {
+      this.setState(
+        { itemsPage: this.state.itemsPage + 1 },
+        this.service.getNextPage(this.state.url, this.state.itemsPage)
+      );
+    }
   };
 
   updateItems(newItems) {
@@ -59,7 +90,15 @@ class Main extends Component {
             OnUpdateItems={this.updateItems}
           />
         </div>
-        <div className="main-body"></div>
+        <div className="main-body">
+          <ListImages items={this.state.items} url={this.state.url} />
+          {this.state.loader ? <Loader /> : ""}
+          {this.state.items.length >= 20 ? (
+            <SeeMore more={this.showMore} showLoader={this.displayLoader} />
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     );
   }
