@@ -38,18 +38,18 @@ class Header extends Component {
                 <li key={option.id.toString()} className="nav-list-item">
                   <div
                     onClick={event => {
-                      this.selectBoxOptions(option.name);
+                      this.selectBoxOptions(option.en);
                       this.showBoxOptions();
                     }}
                   >
-                    {option.name}
+                    {option.pt}
                   </div>
-                  {this.state.selectedBoxOptions === `${option.name}` &&
+                  {this.state.selectedBoxOptions === `${option.en}` &&
                   this.state.viewBoxOptions ? (
                     <Options
                       OnRequestCurrentURL={this.props.OnRequestCurrentURL}
                       OnUpdateItems={this.props.OnUpdateItems}
-                      optionBox={option.name}
+                      optionBox={option.en}
                       text={this.props.text}
                     />
                   ) : (

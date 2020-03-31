@@ -43,6 +43,6 @@ export const OPTIONS = {
 };
 
 export const HEADER_items = [
-  { id: 0, name: "category" },
-  { id: 1, name: "colors" }
+  { id: 0, en: "category", pt: "categorias" },
+  { id: 1, en: "colors", pt: "cores" }
 ];
