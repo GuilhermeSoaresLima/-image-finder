@@ -35,10 +35,10 @@ function InputSearch(props) {
             API_KEY
           );
 
-          // props.OnRequestCurrentURL(
-          //   //update current url
-          //   `${API_URL}?key=${API_KEY}`.concat("&q=" + isLongText)
-          // );
+          props.OnRequestCurrentURL(
+            //update current url
+            `${API_URL}?key=${API_KEY}`.concat("&q=" + isLongText)
+          );
 
           const promiseResolved = Promise.resolve(searchedItems);
 
@@ -50,7 +50,6 @@ function InputSearch(props) {
               // not called
             }
           );
-          //   props.onSearch(isLongText);
         }}
       >
         Buscar

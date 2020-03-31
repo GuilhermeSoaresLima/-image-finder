@@ -29,13 +29,14 @@ function Options(props) {
                     promiseResolved.then(
                       function(updatedItems) {
                         props.OnUpdateItems(updatedItems.data.hits);
+                        props.OnRequestCurrentURL(
+                          `${API_URL}?key=${API_KEY}&${props.optionBox}=${item.en}`
+                        );
                       },
                       function(e) {
                         // not called
                       }
                     );
-
-                    // props.requestCurrentURL(props.url);
                   }}
                 >
                   {item.pt}

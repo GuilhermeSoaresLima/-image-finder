@@ -47,9 +47,7 @@ class Header extends Component {
                   {this.state.selectedBoxOptions === `${option.name}` &&
                   this.state.viewBoxOptions ? (
                     <Options
-                      // onAddFilter={this.addFilter}
-                      // reset={this.this.props.reset}
-                      // url={this.this.props.url}
+                      OnRequestCurrentURL={this.props.OnRequestCurrentURL}
                       OnUpdateItems={this.props.OnUpdateItems}
                       optionBox={option.name}
                       text={this.props.text}

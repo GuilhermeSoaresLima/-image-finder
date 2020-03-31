@@ -45,6 +45,7 @@ class Colors extends Component {
 
     initialImages.then(value => {
       this.updateItems(value.data.hits);
+      this.requestCurrentURL(`${API_URL}?key=${API_KEY}&q=${this.props.id}`);
     });
   }
 
@@ -56,9 +57,9 @@ class Colors extends Component {
     this.setState({ text: event.target.value }); //salvando texto digitado no state
   }
 
-  requestCurrentURL = currentURL => {
+  requestCurrentURL(currentURL) {
     this.setState({ url: currentURL });
-  };
+  }
 
   showMore() {
     this.setState({ itemsPage: this.state.itemsPage + 1 });

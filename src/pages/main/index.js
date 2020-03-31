@@ -52,9 +52,9 @@ class Main extends Component {
     this.setState({ text: event.target.value }); //salvando texto digitado no state
   }
 
-  requestCurrentURL = currentURL => {
+  requestCurrentURL(currentURL) {
     this.setState({ url: currentURL });
-  };
+  }
 
   showMore() {
     this.setState({ itemsPage: this.state.itemsPage + 1 });
@@ -75,7 +75,7 @@ class Main extends Component {
           <Header
             text={this.state.text}
             onHandleInputChange={this.handleInputChange}
-            onRequestCurrentURL={this.requestCurrentURL}
+            OnRequestCurrentURL={this.requestCurrentURL}
             OnUpdateItems={this.updateItems}
           />
         </div>
