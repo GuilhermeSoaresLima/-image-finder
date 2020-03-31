@@ -47,8 +47,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Main}></Route>
           <Route exact path="/home" component={Main}></Route>
-          {/* <Route exact path="/categoria/:id" component={ComponentCategory} />
-          <Route exact path="/cor/:id" component={ComponentColors} /> */}
+          <Route exact path="/categoria/:id" component={ComponentCategory} />
+          <Route exact path="/cor/:id" component={ComponentColors} />
         </Switch>
       </Router>
     );

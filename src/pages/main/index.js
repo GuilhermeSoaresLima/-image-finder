@@ -54,12 +54,6 @@ class Main extends Component {
 
   requestCurrentURL = currentURL => {
     this.setState({ url: currentURL });
-
-    const u = {
-      url: this.state.url
-    };
-
-    console.log("atual url: ", u);
   };
 
   showMore() {
@@ -68,12 +62,10 @@ class Main extends Component {
 
   updateConcatItems(newItems) {
     this.setState({ items: this.state.items.concat(newItems) });
-    console.log("novos concatenados", this.state.items);
   }
 
   updateItems(newItems) {
     this.setState({ items: newItems });
-    console.log("novos", this.state.items);
   }
 
   render() {

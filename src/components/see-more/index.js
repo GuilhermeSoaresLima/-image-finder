@@ -21,10 +21,8 @@ function SeeMore(props) {
 
           promiseResolved.then(
             function(updatedItems) {
-              console.log(props);
               props.showLoader();
               props.OnUpdateConcatItems(updatedItems.data.hits);
-              console.log("itens", updatedItems);
             },
             function(e) {
               // not called

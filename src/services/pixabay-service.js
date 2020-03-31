@@ -8,12 +8,9 @@ class PixabayService extends Component {
   }
 
   getDefaultImages(api_url, api_key) {
-    // const queryStringResult = new URLSearchParams().toString();
     const apiResponse = axios
       .get(`${api_url}?key=${api_key}`)
       .then(response => {
-        // console.log("response IMAGES", response);
-
         return response;
       })
       .catch(error => {
@@ -34,6 +31,19 @@ class PixabayService extends Component {
       .catch(function(error) {
         // handle error
 
+        return error;
+      });
+
+    return apiResponse.then(value => value);
+  }
+
+  gettImagesFromURL(api_url, api_key, searchImage) {
+    const apiResponse = axios
+      .get(`${api_url}?key=${api_key}&q=${searchImage}`)
+      .then(response => {
+        return response;
+      })
+      .catch(error => {
         return error;
       });
 
@@ -61,7 +71,6 @@ class PixabayService extends Component {
     const apiResponse = axios
       .get(`${currentUrl}&page=${numberPage}`)
       .then(response => {
-        // console.log("response", response);
         return response;
       })
       .catch(error => {
