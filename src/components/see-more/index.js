@@ -10,14 +10,21 @@ function SeeMore(props) {
       <button
         className="btn-see-more"
         onClick={event => {
+          props.more();
           props.showLoader();
-          const selectedOption = service.getNextPage(props.url, 2);
+          const selectedOption = service.getNextPage(
+            props.url,
+            props.itemsPage
+          );
 
           const promiseResolved = Promise.resolve(selectedOption);
 
           promiseResolved.then(
             function(updatedItems) {
-              props.OnUpdateItems(updatedItems.data.hits);
+              console.log(props);
+              props.showLoader();
+              props.OnUpdateConcatItems(updatedItems.data.hits);
+              console.log("itens", updatedItems);
             },
             function(e) {
               // not called
@@ -31,8 +38,8 @@ function SeeMore(props) {
   );
 }
 
-SeeMore.propTypes = {
-  more: PropTypes.func.isRequired
-};
+// SeeMore.propTypes = {
+//   more: PropTypes.func.isRequired
+// };
 
 export default SeeMore;

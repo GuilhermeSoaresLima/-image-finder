@@ -8,19 +8,19 @@ class PixabayService extends Component {
   }
 
   getDefaultImages(api_url, api_key) {
-    const queryStringResult = new URLSearchParams().toString();
+    // const queryStringResult = new URLSearchParams().toString();
     const apiResponse = axios
-      .get(`${api_url}?key=${api_key}&${queryStringResult}`)
+      .get(`${api_url}?key=${api_key}`)
       .then(response => {
-        console.log("response", response);
+        console.log("response IMAGES", response);
 
         return response;
       })
       .catch(error => {
-        return "Error";
+        return error;
       });
 
-    apiResponse.then(value => {
+    return apiResponse.then(value => {
       console.log("value", value);
     });
   }

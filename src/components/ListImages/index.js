@@ -12,9 +12,9 @@ function ListImages(props) {
   );
 }
 
-ListImages.propTypes = {
-  items: PropTypes.array,
-  url: PropTypes.string
-};
+// ListImages.propTypes = {
+//   items: PropTypes.array,
+//   url: PropTypes.string
+// };
 
 export default ListImages;

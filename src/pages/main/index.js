@@ -3,7 +3,7 @@ import Header from "./../../components/header";
 import ListImages from "./../../components/ListImages";
 import SeeMore from "./../../components/see-more";
 import Loader from "./../../components/loader";
-import axios from "axios";
+// import axios from "axios";
 import { API_URL, API_KEY } from "./../../constants";
 import PixabayService from "./../../services/pixabay-service";
 
@@ -11,7 +11,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemsPage: 1,
+      itemsPage: 2,
       items: [],
       loader: false,
       text: "",
@@ -21,12 +21,14 @@ class Main extends Component {
     this.service = new PixabayService();
     this.handleInputChange = this.handleInputChange.bind(this);
     this.requestCurrentURL = this.requestCurrentURL.bind(this);
+    this.showMore = this.showMore.bind(this);
+    this.updateConcatItems = this.updateConcatItems.bind(this);
     this.updateItems = this.updateItems.bind(this);
   }
 
   componentDidMount() {
     // console.log(this.service.nextPage(API_URL, API_KEY, 2));
-    console.log(this.service.getDefaultImages(API_URL, API_KEY));
+    // console.log(this.service.getDefaultImages(API_URL, API_KEY));
 
     const initialImages = this.service.getDefaultImages(API_URL, API_KEY);
 
@@ -35,6 +37,7 @@ class Main extends Component {
     promiseResolved.then(
       function(updatedItems) {
         // this.updateItems(updatedItems.data.hits);
+        // console.log(updatedItems);
       },
       function(e) {
         // not called
@@ -60,13 +63,14 @@ class Main extends Component {
     console.log("atual url: ", u);
   };
 
-  showMore = () => {
-    if (this.state.items.length <= 20) {
-      this.setState({ itemsPage: 2 });
-    } else {
-      this.setState({ itemsPage: this.state.itemsPage + 1 });
-    }
-  };
+  showMore() {
+    this.setState({ itemsPage: this.state.itemsPage + 1 });
+  }
+
+  updateConcatItems(newItems) {
+    this.setState({ items: this.state.items.concat(newItems) });
+    console.log("novos concatenados", this.state.items);
+  }
 
   updateItems(newItems) {
     this.setState({ items: newItems });
@@ -86,11 +90,12 @@ class Main extends Component {
         </div>
         <div className="main-body">
           <ListImages items={this.state.items} url={this.state.url} />
-          {this.state.loader ? <Loader /> : ""}
+          {this.state.loader ? <Loader /> : " "}
           {this.state.items.length >= 20 ? (
             <SeeMore
-              itemPage={this.state.itemsPage}
-              OnUpdateItems={this.updateItems}
+              itemsPage={this.state.itemsPage}
+              more={this.showMore}
+              OnUpdateConcatItems={this.updateConcatItems}
               showLoader={this.displayLoader}
               url={this.state.url}
             />
