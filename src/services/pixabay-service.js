@@ -12,7 +12,7 @@ class PixabayService extends Component {
     const apiResponse = axios
       .get(`${api_url}?key=${api_key}`)
       .then(response => {
-        console.log("response IMAGES", response);
+        // console.log("response IMAGES", response);
 
         return response;
       })
@@ -20,9 +20,7 @@ class PixabayService extends Component {
         return error;
       });
 
-    return apiResponse.then(value => {
-      console.log("value", value);
-    });
+    return apiResponse.then(value => value);
   }
 
   getFilteredImages(api_url, api_key, filterOption, searchValue) {

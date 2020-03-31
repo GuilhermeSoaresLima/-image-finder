@@ -27,22 +27,21 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    // console.log(this.service.nextPage(API_URL, API_KEY, 2));
-    // console.log(this.service.getDefaultImages(API_URL, API_KEY));
-
     const initialImages = this.service.getDefaultImages(API_URL, API_KEY);
-
     const promiseResolved = Promise.resolve(initialImages);
 
     promiseResolved.then(
       function(updatedItems) {
-        // this.updateItems(updatedItems.data.hits);
-        // console.log(updatedItems);
+        return updatedItems;
       },
       function(e) {
         // not called
       }
     );
+
+    initialImages.then(value => {
+      this.updateItems(value.data.hits);
+    });
   }
 
   displayLoader = () => {
